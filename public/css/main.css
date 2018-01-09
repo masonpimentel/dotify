@@ -1,0 +1,68 @@
+body {
+    box-sizing: border-box;
+    float: none;
+}
+
+.header h1,
+.header img {
+    display: inline;
+}
+
+.header h1 {
+    margin-left: 20px;
+}
+
+.header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#playlists {
+    border: 1px solid black;
+}
+
+#songs {
+    border: 1px solid black;
+}
+
+#friends {
+    border: 1px solid black;
+}
+
+.row {
+    margin-bottom: 5px;
+}
+
+.bmargin {
+    margin-bottom: 5px;
+}
+
+.admin {
+    display: none;
+}
+
+.addModal {
+    width: 150px;
+}
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+
+.table-borderless {
+    margin-bottom: 0;
+}
+
+#playlistRating {
+    width: 30px;
+}
+
+.table > tbody > tr .playlistAdd {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}

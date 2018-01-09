@@ -1,0 +1,255 @@
+//if anyone sees this and wonders what on earth is happening here, bootstrap doesn't want to load
+//dynamically updated elements... so this is a workaround
+function createAlbumInfoModal(arg1, arg2, arg3, arg4, arg5, name) {
+    return '<div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
+        '<h4 class="modal-title">' + name + '</h4></div><div class="modal-body"><table class="table table-borderless">' +
+        '<tbody> Album length: ' + arg1 + '<br></tbody><tbody> Average song length: ' + arg2 + '<br></tbody><tbody> Max song length: ' +
+        arg3 + '<br></tbody><tbody> Min song length: ' + arg4 + '<br></tbody><tbody> Total songs: ' + arg5 + '</tbody></table>' +
+        '</div><div class="modal-footer"><button type="text" class="btn btn-success" onclick="findAlbumInfoGo()">Close' +
+        '</button></div></div></div>'
+}
+
+function createAlbumStatsModal(arg1, arg2, arg3, arg4, arg5) {
+    return '<div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
+        '<h4 class="modal-title"> Album stats: </h4></div><div class="modal-body"><table class="table table-borderless">' +
+        '<tbody> Lowest number of songs in an album: ' + arg1 + '<br></tbody><tbody> Highest number of songs in an album: ' + arg2 + '<br></tbody><tbody> Average number of songs in an album: ' +
+        arg3 + '<br></tbody><tbody> Total number of songs from all albums: ' + arg4 + '<br></tbody><tbody> Total number of albums: ' + arg5 + '</tbody></table>' +
+        '</div><div class="modal-footer"><button type="text" class="btn btn-success" onclick="albumStatsGo()">Close' +
+        '</button></div></div></div>'
+}
+
+function createPlaylistModal(value) {
+    return '<div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
+        '<h4 class="modal-title">Playlist stats</h4></div><div class="modal-body"><table class="table table-borderless">' +
+        '<tbody>Playlists that contain all songs in the library: ' + value + '</tbody>' +
+        '</table></div><div class="modal-footer"><button type="text" class="btn btn-success" onclick="playlistStatsGo()">' +
+        'Close</button></div></div></div>';
+}
+
+function createAddToPlaylistModal(result, album, artist, song) {
+    var links = "";
+    var args;
+    var playlist;
+    for (var i = 0; i < result.length; i++) {
+        playlist = result[i].playlist_name;
+        args = "'" + playlist + "', '" + album + "', '" + artist + "', '" + song + "'";
+        links = links + '<tr><td class="playlistAdd"><a href="javascript:addToPlaylistGo(' + args + ')">' + playlist + '</a></td></tr>';
+    }
+
+    $('#addToPlaylist').on('shown.bs.modal', function() {
+        var input = $('#playlistRating');
+        input.focus();
+        input[0].setSelectionRange(1,1);
+        $('#select_playlist').html(links);
+    }).handleUpdate().modal("show");
+}
+
+function addSong() {
+    $("#addSong").modal("show");
+}
+
+function addSongGo() {
+    $("#addSong").modal("hide");
+    var songName = document.getElementById("songName").value;
+    var albumName = document.getElementById("albumName").value;
+    var albumGenre = document.getElementById("albumGenre").value;
+    //var trackNumber = document.getElementById("trackNumber").value;
+    //hardcoding since we don't really use it
+    var trackNumber = 1;
+    var songLength = document.getElementById("songLength").value;
+    var artistName = document.getElementById("artistName").value;
+    var albumYear = document.getElementById("albumYear").value;
+    var req = {
+        album_name: albumName,
+        artist: artistName,
+        album_year: albumYear,
+        genre: albumGenre,
+        song_name: songName,
+        track: trackNumber,
+        song_length: songLength
+    };
+    document.getElementById("songName").value = "";
+    document.getElementById("albumName").value = "";
+    document.getElementById("albumGenre").value = "";
+    //document.getElementById("trackNumber").value = "";
+    document.getElementById("songLength").value = "";
+    document.getElementById("artistName").value = "";
+    document.getElementById("albumYear").value = "";
+    ajaxRequest("POST", "/api/public/api/songs/insert", "insert_song", req);
+}
+
+function removeSongs() {
+    $("#removeSongs").modal("show").on('shown.bs.modal', function() {
+        $('#songNameDelete').focus();
+    });
+}
+
+function removeSongsGo() {
+    $("#removeSongs").modal("hide");
+    var songNameDelete = document.getElementById("songNameDelete").value;
+    var req = {
+        song_name: songNameDelete
+    };
+    ajaxRequest("POST", "/api/public/api/songs/delete/name", "delete_song", req);
+}
+
+function removeSongsAlbum() {
+    $("#removeSongsAlbum").modal("show").on('shown.bs.modal', function() {
+        $('#albumNameDelete').focus();
+    });
+}
+
+function removeSongsAlbumGo() {
+    $("#removeSongsAlbum").modal("hide");
+    var albumNameDelete = document.getElementById("albumNameDelete").value;
+    var albumArtistDelete = document.getElementById("albumArtistDelete").value;
+    var req = {
+        album_name: albumNameDelete,
+        artist: albumArtistDelete
+    };
+    ajaxRequest("POST", "/api/public/api/songs/delete/album", "delete_song_album", req);
+}
+
+/* Change rating
+ *
+ * Required
+ * ratingId: id of rating element
+ */
+function changeRating(ratingId) {
+    var changeRating = document.getElementById("changeRating").innerHTML;
+    var oldRating = changeRating.split("'")[5];
+    var oldRating2 = changeRating.split("'")[3];
+    var oldElement = document.getElementById("changeRating").innerHTML;
+    var newElement = oldElement.replace(oldRating, ratingId);
+    newElement = newElement.replace(oldRating2, ratingId);
+    document.getElementById("changeRating").innerHTML = newElement;
+    console.log("newRating: " + newElement);
+    $("#changeRating").modal("show").on('shown.bs.modal', function() {
+        $('#newRating').focus();
+    });
+}
+
+/* Insert new rating
+ *
+ * Required
+ * ratingId: "pid"-"song_name"
+ */
+function changeRatingGo(ratingId) {
+    var newRating = document.getElementById("newRating").value;
+    //errorMessage("Please enter a rating > 0 and < " + MAX_RATING);
+    if (newRating > MAX_RATING || newRating < 0) {
+        $("#changeRating").modal("hide");
+        errorMessage("Please enter a rating > 0 and <= " + MAX_RATING);
+        return;
+    }
+    document.getElementById("newRating").value = "";
+    var pid = ratingId.split("-")[0];
+    var songName = ratingId.split("-")[1];
+    console.log("ratingId: " + ratingId);
+    var req = {
+        rating: newRating,
+        song_name: songName,
+        pid: pid
+    };
+    ajaxRequest("POST", "/api/public/api/rating/update", "update_rating", req, ratingId, newRating);
+    $("#changeRating").modal("hide");
+}
+
+function addPlaylist() {
+    $("#addPlaylist").modal("show").on('shown.bs.modal', function() {
+        $('#playlistName').focus();
+    });
+}
+
+function addPlaylistGo() {
+    var playlist = document.getElementById("playlistName").value;
+    document.getElementById("playlistName").value = "";
+    var req = {
+        playlist: playlist,
+        username: lUname
+    };
+    ajaxRequest("POST", "/api/public/api/playlists/create", "add_playlist", req, playlist);
+    $("#addPlaylist").modal("hide");
+}
+
+function addToPlaylist(album, artist, song) {
+    var req = {
+        username: lUname
+    };
+    ajaxRequest("POST", "/api/public/api/playlists", "playlist_modal", req, album, artist, song);
+    $("#addToPlaylist").modal("show");
+}
+
+function addToPlaylistGo(playlist, album, artist, song) {
+    var rating = document.getElementById("playlistRating").value;
+    var req = {
+        username: lUname,
+        playlist: playlist,
+        album_name: album,
+        artist: artist,
+        song_name: song,
+        rating: rating
+    };
+    ajaxRequest("POST", "/api/public/api/playlists/insert", "insert_into_playlist", req);
+    $("#addToPlaylist").modal("hide");
+}
+
+function playlistStats() {
+    ajaxRequest("GET", "/api/public/api/playlists/stats", "playlist_stats", "dummy");
+}
+
+function playlistStatsSet(result) {
+    var newValue = "";
+    if (!result[0]) {
+        newValue = "none";
+    }
+    else {
+        newValue = result[0].playlist_name;
+    }
+    for (var i = 1; i < result.length; i++) {
+        newValue = newValue + ", " + result[i].playlist_name;
+    }
+    var modalValue = createPlaylistModal(newValue);
+    $('#playlistStats').on('show.bs.modal', function(){
+        $('#playlistStats').html(modalValue);
+    }).modal("show");
+}
+
+function playlistStatsGo() {
+    $("#playlistStats").modal("hide");
+}
+
+function albumStats() {
+    ajaxRequest("GET", "/api/public/api/album/stats/lownumsongs", "album_stats_1", "dummy");
+}
+
+function albumStatsSet(arg1, arg2, arg3, arg4, arg5) {
+    var modalValue = createAlbumStatsModal(arg1.toFixed(2), arg2.toFixed(2), parseInt(arg3).toFixed(2), parseInt(arg4).toFixed(2), arg5.toFixed(2));
+    $('#albumStats').on('show.bs.modal', function(){
+        $('#albumStats').html(modalValue);
+    }).modal("show");
+}
+
+function albumStatsGo() {
+    $("#albumStats").modal("hide");
+}
+
+function findAlbumInfo(albumId) {
+    var req = {
+        album_name: albumId
+    };
+    ajaxRequest("POST", "/api/public/api/album/length", "album_1", req);
+}
+
+function findAlbumInfoSet(arg1, arg2, arg3, arg4, arg5, name) {
+    var modalValue = createAlbumInfoModal(arg1.toFixed(2), arg2.toFixed(2), arg3.toFixed(2), arg4.toFixed(2), arg5.toFixed(2), name);
+    $('#albumInfo').on('show.bs.modal', function(){
+        $('#albumInfo').html(modalValue);
+    }).modal("show");
+}
+
+function findAlbumInfoGo() {
+    $("#albumInfo").modal("hide");
+}
+
+

@@ -1,7 +1,7 @@
-drop database if exists database_name;
-create database database_name;
+drop database if exists heroku_6f66a796c5d0830;
+create database heroku_6f66a796c5d0830;
 
-use database_name;
+use heroku_6f66a796c5d0830;
 
 create table song  (
 	sid int not null auto_increment,

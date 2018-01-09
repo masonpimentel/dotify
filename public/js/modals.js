@@ -75,7 +75,7 @@ function addSongGo() {
     document.getElementById("songLength").value = "";
     document.getElementById("artistName").value = "";
     document.getElementById("albumYear").value = "";
-    ajaxRequest("POST", "/api/public/api/songs/insert", "insert_song", req);
+    ajaxRequest("POST", "/songs/insert", "insert_song", req);
 }
 
 function removeSongs() {
@@ -90,7 +90,7 @@ function removeSongsGo() {
     var req = {
         song_name: songNameDelete
     };
-    ajaxRequest("POST", "/api/public/api/songs/delete/name", "delete_song", req);
+    ajaxRequest("POST", "/songs/delete/name", "delete_song", req);
 }
 
 function removeSongsAlbum() {
@@ -107,7 +107,7 @@ function removeSongsAlbumGo() {
         album_name: albumNameDelete,
         artist: albumArtistDelete
     };
-    ajaxRequest("POST", "/api/public/api/songs/delete/album", "delete_song_album", req);
+    ajaxRequest("POST", "/songs/delete/album", "delete_song_album", req);
 }
 
 /* Change rating
@@ -151,7 +151,7 @@ function changeRatingGo(ratingId) {
         song_name: songName,
         pid: pid
     };
-    ajaxRequest("POST", "/api/public/api/rating/update", "update_rating", req, ratingId, newRating);
+    ajaxRequest("POST", "/rating/update", "update_rating", req, ratingId, newRating);
     $("#changeRating").modal("hide");
 }
 
@@ -168,7 +168,7 @@ function addPlaylistGo() {
         playlist: playlist,
         username: lUname
     };
-    ajaxRequest("POST", "/api/public/api/playlists/create", "add_playlist", req, playlist);
+    ajaxRequest("POST", "/playlists/create", "add_playlist", req, playlist);
     $("#addPlaylist").modal("hide");
 }
 
@@ -176,7 +176,7 @@ function addToPlaylist(album, artist, song) {
     var req = {
         username: lUname
     };
-    ajaxRequest("POST", "/api/public/api/playlists", "playlist_modal", req, album, artist, song);
+    ajaxRequest("POST", "/playlists", "playlist_modal", req, album, artist, song);
     $("#addToPlaylist").modal("show");
 }
 
@@ -190,12 +190,12 @@ function addToPlaylistGo(playlist, album, artist, song) {
         song_name: song,
         rating: rating
     };
-    ajaxRequest("POST", "/api/public/api/playlists/insert", "insert_into_playlist", req);
+    ajaxRequest("POST", "/playlists/insert", "insert_into_playlist", req);
     $("#addToPlaylist").modal("hide");
 }
 
 function playlistStats() {
-    ajaxRequest("GET", "/api/public/api/playlists/stats", "playlist_stats", "dummy");
+    ajaxRequest("GET", "/playlists/stats", "playlist_stats", "dummy");
 }
 
 function playlistStatsSet(result) {
@@ -220,7 +220,7 @@ function playlistStatsGo() {
 }
 
 function albumStats() {
-    ajaxRequest("GET", "/api/public/api/album/stats/lownumsongs", "album_stats_1", "dummy");
+    ajaxRequest("GET", "/album/stats/lownumsongs", "album_stats_1", "dummy");
 }
 
 function albumStatsSet(arg1, arg2, arg3, arg4, arg5) {
@@ -238,7 +238,7 @@ function findAlbumInfo(albumId) {
     var req = {
         album_name: albumId
     };
-    ajaxRequest("POST", "/api/public/api/album/length", "album_1", req);
+    ajaxRequest("POST", "/album/length", "album_1", req);
 }
 
 function findAlbumInfoSet(arg1, arg2, arg3, arg4, arg5, name) {

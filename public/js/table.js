@@ -29,7 +29,7 @@ function songsView() {
     clearTable();
     //change to songs header
     setSongsHeader();
-    ajaxRequest("GET", "/api/public/api/songs", "songs", null);
+    ajaxRequest("GET", "/songs", "songs", null);
 }
 
 //won't scale well with recursion - would need a better algorithm
@@ -168,7 +168,7 @@ function displayPlaylist(playlist) {
     var req = {
         playlist: playlist
     };
-    ajaxRequest("POST", "/api/public/api/songs/byplaylist", "insert_playlist", req, playlist);
+    ajaxRequest("POST", "/songs/byplaylist", "insert_playlist", req, playlist);
 }
 
 /* Insert rating into the playlist table
@@ -206,5 +206,5 @@ function removeFromPlaylist(playlist, album, artist, song) {
         artist: artist,
         song_name: song
     };
-    ajaxRequest("POST", "/api/public/api/playlists/remove", "remove_from_playlist", req, playlist);
+    ajaxRequest("POST", "/playlists/remove", "remove_from_playlist", req, playlist);
 }

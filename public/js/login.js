@@ -1,7 +1,7 @@
 function login() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
-    ajaxRequest("GET", "/api/public/api/users", "users", "req", username, password);
+    ajaxRequest("GET", "/users", "users", "req", username, password);
     $("#login").modal("hide");
 }
 
@@ -28,9 +28,9 @@ function checkUser(result, username, password) {
         var req = {
             username: username
         };
-        ajaxRequest("GET", "/api/public/api/admins", "admins", "dummy" ,username);
-        ajaxRequest("POST", "/api/public/api/playlists", "playlists", req, username);
-        ajaxRequest("GET", "/api/public/api/songs", "songs", null);
+        ajaxRequest("GET", "/admins", "admins", "dummy" ,username);
+        ajaxRequest("POST", "/playlists", "playlists", req, username);
+        ajaxRequest("GET", "/songs", "songs", null);
     }
     else {
         window.alert("Incorrect username or password");

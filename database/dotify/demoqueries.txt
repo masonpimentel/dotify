@@ -1,0 +1,161 @@
+-- creates a new playlist with the specified name 
+-- the user name in userplaylists (in the example "Sailor Bacon") should be the name of the current user logged in
+insert into playlist (playlist_name) values ("Name Of Playlist");
+set @last_sid = last_insert_id();
+insert into userplaylists values ("Sailor Bacon", @last_sid);
+
+-- inserts a song into a playlist
+-- user will need to specify song name, artist name, album name, rating, and play list name
+-- the user name being used (up.uname) should be the name of the current user logged in
+set @sid_temp = (
+select s.sid 
+from song s, albumcontains ac 
+where s.song_name="u" and ac.artist_name="Kendrick Lamar" and ac.album_name="To Pimp a Butterfly" and ac.sid=s.sid);
+
+set @pid_temp = (
+select p.pid
+from playlist p, userplaylists up
+where p.pid=up.pid and p.playlist_name="Rock and Roll" and up.uname="Porchwork"
+);
+
+insert into playlistsongs values (curdate(), @sid_temp, @pid_temp, 3);
+
+-- playlist view based on user name and playlist name, in case you need it
+select ps.added_date, ps.rating, s.song_name, s.track_number, s.song_length, ac.album_name, ac.artist_name 
+from playlistsongs ps, playlist p, song s, albumcontains ac, userplaylists up
+where p.playlist_name="Rock and roll" and up.uname="Porchwork" and ps.pid=p.pid and ps.sid=s.sid and ac.sid=s.sid and up.pid=ps.pid;
+
+-- delete a song from a playlist 
+-- user will need to specify song name, artist name, album name, and play list name
+-- the user name being used (up.uname) should be the name of the current user logged in
+set @sid_temp = (
+select s.sid 
+from song s, albumcontains ac 
+where s.song_name="u" and ac.artist_name="Kendrick Lamar" and ac.album_name="To Pimp a Butterfly" and ac.sid=s.sid);
+
+set @pid_temp = (
+select p.pid
+from playlist p, userplaylists up
+where p.pid=up.pid and p.playlist_name="Rock and Roll" and up.uname="Porchwork"
+);
+
+delete from playlistsongs where playlistsongs.pid=@pid_temp and playlistsongs.sid=@sid_temp;
+
+
+
+-- I have listed some sample queries below that satisfy the demo requirements as well as a useful
+-- way to handle adding new songs
+
+-- insert a new song where sid is handled by auto-increment
+-- admin must specify album name, artist name, album year, album genre, song name, track number, and song length
+insert into albumcategory values ("Test Album", "Test Artist", 2017, "Pop") on duplicate key update album_name=album_name;
+insert into song (song_name, track_number, song_length) values ("Test", 1, 4.20);
+set @last_sid = last_insert_id();
+insert into albumcontains values ("Test Album", "Test Artist", @last_sid);
+
+-- Find all songs with specified key words in song name
+-- User will specify the keywords. Query is not case sensitive
+select song_name, artist_name, song_length, track_number, album_name 
+from song s, albumcontains ac 
+where s.sid = ac.sid and song_name like "%We%" or song_name like "%we";
+
+-- Find all songs with specified genre
+-- User will specify the genre. Genre name will have to be exact
+select song_name, ac.artist_name, song_length, track_number, ac.album_name, genre_name
+from song s, albumcontains ac, albumcategory a
+where s.sid = ac.sid and ac.artist_name = a.artist_name and ac.album_name = a.album_name and genre_name="Hip-Hop";
+
+-- join query covered in both above
+
+-- find the playlist names of any playlist that contains all songs in library
+select playlist_name
+from playlistsongs ps, playlist p
+where p.pid = ps.pid
+group by p.pid
+having count(ps.sid) = (select count(s.sid) from song s);
+
+-- find the total album length of each album
+select album_name, artist_name, sum(song_length) 
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name;
+
+-- find the average song length of each album
+select album_name, artist_name, avg(song_length) 
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name;
+
+-- find the max song length of each album
+select album_name, artist_name, max(song_length) 
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name;
+
+-- find the min song length of each album
+select album_name, artist_name, min(song_length) 
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name;
+
+-- find the number of songs in each album
+select album_name, artist_name, count(s.sid) 
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name;
+
+-- nested aggregation: lowest number of songs in an album
+select min(x.temp) as 'Lowest Number of Songs in an Album' from
+(select album_name, artist_name, count(s.sid) as temp
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name) as x;
+
+-- nested aggregation: highest number of songs in an album
+select max(x.temp) as 'Highest Number of Songs in an Album' from
+(select album_name, artist_name, count(s.sid) as temp
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name) as x;
+
+-- nested aggregation: average number of songs in an album
+select avg(x.temp) as 'Average Number of Songs in an Album' from
+(select album_name, artist_name, count(s.sid) as temp
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name) as x;
+
+-- nested aggregation: total number of songs in all albums
+select sum(x.temp) as 'Total Number of Songs from all albums' from
+(select album_name, artist_name, count(s.sid) as temp
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name) as x;
+
+-- nested aggregation: total number of albums
+select count(x.temp) as 'Total Number of albums' from
+(select album_name, artist_name, count(s.sid) as temp
+from albumcontains ac, song s 
+where ac.sid = s.sid 
+group by album_name, artist_name) as x;
+
+-- Admin will delete a certain song given a song name (or sid). I have set almost all foriegn keys to cascade on delete
+delete from song where song_name="These Walls";
+
+-- Admin will delete all songs related to a specified album and artist
+-- To delete all songs from a certain album you will need to run two queries. In general with
+-- updates and deletions you need to ensure that they happen across all relations
+delete s, ac
+from song s
+inner join albumcontains ac on s.sid=ac.sid
+where album_name="Ride the Lightning" and artist_name="Metallica";
+
+delete from albumcategory where album_name="Ride the Lightning" and artist_name="Metallica";
+
+-- update the rating for a song from the users playlist given the song name and playlist. 
+-- You will need to add a check constraint in the code since mysql does not support it
+-- Can also update song info or artist info (should be done in albumcategory)
+update playlistsongs 
+inner join song on song.sid = playlistsongs.sid
+set rating=5
+where song_name="u" and pid=5000;

@@ -40,7 +40,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
             }
             else if(action == "insert_song" || action == "delete_song" || action == "delete_song_album") {
                 clearTable();
-                ajaxRequest("GET", "/api/public/api/songs", "songs", null);
+                ajaxRequest("GET", "/songs", "songs", null);
             }
             else if(action == "search_song_genre" || action == "search_song_name") {
                 clearTable();
@@ -51,19 +51,19 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
             }
             else if(action == "album_stats_1") {
                 arg = result[0]["Lowest Number of Songs in an Album"];
-                ajaxRequest("GET", "/api/public/api/album/stats/highnumsongs", "album_stats_2", "dummy", arg);
+                ajaxRequest("GET", "/album/stats/highnumsongs", "album_stats_2", "dummy", arg);
             }
             else if(action == "album_stats_2") {
                 arg = result[0]["Highest Number of Songs in an Album"];
-                ajaxRequest("GET", "/api/public/api/album/stats/avgnumsongs", "album_stats_3", "dummy", arg1, arg);
+                ajaxRequest("GET", "/album/stats/avgnumsongs", "album_stats_3", "dummy", arg1, arg);
             }
             else if(action == "album_stats_3") {
                 arg = result[0]["Average Number of Songs in an Album"];
-                ajaxRequest("GET", "/api/public/api/album/stats/totnumsongs", "album_stats_4", "dummy", arg1, arg2, arg);
+                ajaxRequest("GET", "/album/stats/totnumsongs", "album_stats_4", "dummy", arg1, arg2, arg);
             }
             else if(action == "album_stats_4") {
                 arg = result[0]["Total Number of Songs from all albums"];
-                ajaxRequest("GET", "/api/public/api/album/stats/totnum", "album_stats_5", "dummy", arg1, arg2, arg3, arg);
+                ajaxRequest("GET", "/album/stats/totnum", "album_stats_5", "dummy", arg1, arg2, arg3, arg);
             }
             else if(action == "album_stats_5") {
                 arg = result[0]["Total Number of albums"];
@@ -71,19 +71,19 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
             }
             else if(action == "album_1") {
                 arg = result[0]["SUM(song_length)"];
-                ajaxRequest("POST", "/api/public/api/album/avgsonglength", "album_2", req, arg);
+                ajaxRequest("POST", "/album/avgsonglength", "album_2", req, arg);
             }
             else if(action == "album_2") {
                 arg = result[0]["AVG(song_length)"];
-                ajaxRequest("POST", "/api/public/api/album/maxsonglength", "album_3", req, arg1, arg);
+                ajaxRequest("POST", "/album/maxsonglength", "album_3", req, arg1, arg);
             }
             else if(action == "album_3") {
                 arg = result[0]["MAX(song_length)"];
-                ajaxRequest("POST", "/api/public/api/album/minsonglength", "album_4", req, arg1, arg2, arg);
+                ajaxRequest("POST", "/album/minsonglength", "album_4", req, arg1, arg2, arg);
             }
             else if(action == "album_4") {
                 arg = result[0]["MIN(song_length)"];
-                ajaxRequest("POST", "/api/public/api/album/numsongs", "album_5", req, arg1, arg2, arg3, arg);
+                ajaxRequest("POST", "/album/numsongs", "album_5", req, arg1, arg2, arg3, arg);
             }
             else if(action == "album_5") {
                 arg = result[0]["COUNT(s.sid)"];
@@ -91,7 +91,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
             }
             else if(action == "add_playlist") {
                 clearPlaylistTable();
-                ajaxRequest("POST", "/api/public/api/playlists", "playlists", req, lUname);
+                ajaxRequest("POST", "/playlists", "playlists", req, lUname);
             }
             else if(action == "remove_from_playlist") {
                 clearTable();

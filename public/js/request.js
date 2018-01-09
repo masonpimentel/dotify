@@ -10,9 +10,11 @@
  */
 function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
     var request = new XMLHttpRequest();
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
     request.open(type, url);
     request.timeout = 5000;
     request.setRequestHeader('Content-Type', 'application/json');
+    request.setRequestHeader('X-CSRF-TOKEN', csrfToken);
     request.onload = function () {
         if (action != "update_rating" && action != "delete_song" && action != "insert_song" && action != "delete_song_album" && action !=
             "add_playlist" && action != "remove_from_playlist" && action != "insert_into_playlist") {

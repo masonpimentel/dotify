@@ -45,7 +45,15 @@ function createAddToPlaylistModal(result, album, artist, song) {
 }
 
 function addSong() {
-    $("#addSong").modal("show");
+    if (disableAdd) {
+        $("#addSongDisabled").modal("show");
+        console.log("disabled")
+    }
+    else {
+        $("#addSong").modal("show");
+        console.log("enabled")
+    }
+
 }
 
 function addSongGo() {
@@ -76,6 +84,16 @@ function addSongGo() {
     document.getElementById("artistName").value = "";
     document.getElementById("albumYear").value = "";
     ajaxRequest("POST", "/songs/insert", "insert_song", req);
+}
+
+function restoreDB() {
+    $("#addSongDisabled").modal("hide");
+    console.log("restoring...");
+    ajaxRequest("POST", "/restore", "restore");
+}
+
+function restoreDBClose() {
+    $("#addSongDisabled").modal("hide");
 }
 
 function removeSongs() {
@@ -156,9 +174,14 @@ function changeRatingGo(ratingId) {
 }
 
 function addPlaylist() {
-    $("#addPlaylist").modal("show").on('shown.bs.modal', function() {
-        $('#playlistName').focus();
-    });
+    if (disableAdd) {
+        $("#addPlaylistDisabled").modal("show");
+    }
+    else {
+        $("#addPlaylist").modal("show").on('shown.bs.modal', function() {
+            $('#playlistName').focus();
+        });
+    }
 }
 
 function addPlaylistGo() {
@@ -170,6 +193,10 @@ function addPlaylistGo() {
     };
     ajaxRequest("POST", "/playlists/create", "add_playlist", req, playlist);
     $("#addPlaylist").modal("hide");
+}
+
+function addPlaylistDisabled() {
+    $("#addPlaylistDisabled").modal("hide");
 }
 
 function addToPlaylist(album, artist, song) {

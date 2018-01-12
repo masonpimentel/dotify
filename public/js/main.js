@@ -1,6 +1,9 @@
 const MAX_RATING = 5;
 var lUname;
 
+//this disables adding songs and playlists
+var disableAdd = true;
+
 /* Handler for text input
  *
  * Required

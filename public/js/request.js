@@ -12,12 +12,17 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
     var request = new XMLHttpRequest();
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
     request.open(type, url);
-    request.timeout = 5000;
+    if (action === "restore") {
+        request.timeout = 60000;
+    }
+    else {
+        request.timeout = 5000;
+    }
     request.setRequestHeader('Content-Type', 'application/json');
     request.setRequestHeader('X-CSRF-TOKEN', csrfToken);
     request.onload = function () {
         if (action != "update_rating" && action != "delete_song" && action != "insert_song" && action != "delete_song_album" && action !=
-            "add_playlist" && action != "remove_from_playlist" && action != "insert_into_playlist") {
+            "add_playlist" && action != "remove_from_playlist" && action != "insert_into_playlist" && action != "restore") {
             var result = JSON.parse(this.responseText);
         }
         if (this.status == 200) {
@@ -101,6 +106,10 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
             }
             else if(action == "playlist_modal") {
                 createAddToPlaylistModal(result, arg1, arg2, arg3);
+            }
+            else if(action == "restore") {
+                console.log(result);
+                //window.location.reload(true);
             }
         }
         else {

@@ -139,6 +139,24 @@
     </div>
 </div>
 
+<div class="modal fade" id="addSongDisabled">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Restore DB</h4>
+            </div>
+            <div class="modal-body">
+                This used to allow an admin to add an individual song, but... I decided to change this to simply restore the DB to its default values.<br><br>
+                Restoring the DB will cause the application to reload.
+            </div>
+            <div class="modal-footer">
+                <button type="text" class="btn btn-success" onclick="restoreDB()">Restore DB</button>
+                <button type="text" class="btn btn-danger" onclick="restoreDBClose()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="addSong">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -298,6 +316,22 @@
             </div>
             <div class="modal-footer">
                 <button type="text" class="btn btn-primary" onclick="addPlaylistGo()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addPlaylistDisabled">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add playlist</h4>
+            </div>
+            <div class="modal-body">
+                Disabled, but please feel free to add songs to the current playlist!
+            </div>
+            <div class="modal-footer">
+                <button type="text" class="btn btn-danger" onclick="addPlaylistDisabled()">Close</button>
             </div>
         </div>
     </div>

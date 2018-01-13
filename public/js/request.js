@@ -108,12 +108,15 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 createAddToPlaylistModal(result, arg1, arg2, arg3);
             }
             else if(action == "restore") {
-                console.log(result);
+                console.log(this.responseText);
                 //window.location.reload(true);
             }
         }
         else {
             window.alert("Error " + this.status);
+        }
+        if (action === "songs") {
+            waitingDialog.hide();
         }
     };
     request.onerror = function() {

@@ -24,6 +24,7 @@ function checkUser(result, username, password) {
         }
     }
     if (match > 0) {
+        waitingDialog.show('Loading songs and playlists...');
         lUname = username;
         var req = {
             username: username

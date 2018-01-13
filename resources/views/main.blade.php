@@ -6,6 +6,7 @@
     <script src="js/libraries/jquery.min.js" type="text/javascript"></script>
     <script src="js/libraries/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/libraries/bootstrap-notify.min.js" type="text/javascript"></script>
+    <script src="js/libraries/bootstrap-waitingfor.min.js" type="text/javascript"></script>
     <script src="js/main.js" type="text/javascript"></script>
     <script src="js/modals.js" type="text/javascript"></script>
     <script src="js/login.js" type="text/javascript"></script>

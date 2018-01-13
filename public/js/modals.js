@@ -47,11 +47,9 @@ function createAddToPlaylistModal(result, album, artist, song) {
 function addSong() {
     if (disableAdd) {
         $("#addSongDisabled").modal("show");
-        console.log("disabled")
     }
     else {
         $("#addSong").modal("show");
-        console.log("enabled")
     }
 
 }
@@ -88,7 +86,6 @@ function addSongGo() {
 
 function restoreDB() {
     $("#addSongDisabled").modal("hide");
-    console.log("restoring...");
     ajaxRequest("POST", "/restore", "restore");
 }
 

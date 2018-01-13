@@ -14,6 +14,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
     request.open(type, url);
     if (action === "restore") {
         request.timeout = 60000;
+        waitingDialog.show('Restoring database... please wait');
     }
     else {
         request.timeout = 5000;
@@ -108,14 +109,13 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 createAddToPlaylistModal(result, arg1, arg2, arg3);
             }
             else if(action == "restore") {
-                console.log(this.responseText);
-                //window.location.reload(true);
+                window.location.reload(true);
             }
         }
         else {
             window.alert("Error " + this.status);
         }
-        if (action === "songs") {
+        if (action === "songs" || action === "restore") {
             waitingDialog.hide();
         }
     };

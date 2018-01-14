@@ -35,13 +35,12 @@ function createAddToPlaylistModal(result, album, artist, song) {
         args = "'" + playlist + "', '" + album + "', '" + artist + "', '" + song + "'";
         links = links + '<tr><td class="playlistAdd"><a href="javascript:addToPlaylistGo(' + args + ')">' + playlist + '</a></td></tr>';
     }
-
-    $('#addToPlaylist').on('shown.bs.modal', function() {
+    $('#addToPlaylist').removeData().on('shown.bs.modal', function() {
         var input = $('#playlistRating');
         input.focus();
         input[0].setSelectionRange(1,1);
         $('#select_playlist').html(links);
-    }).handleUpdate().modal("show");
+    }).modal("show");
 }
 
 function addSong() {
@@ -200,8 +199,9 @@ function addToPlaylist(album, artist, song) {
     var req = {
         username: lUname
     };
+    $('#select_playlist').html(loader);
     ajaxRequest("POST", "/playlists", "playlist_modal", req, album, artist, song);
-    $("#addToPlaylist").modal("show");
+    $("#addToPlaylist").removeData().modal("show");
 }
 
 function addToPlaylistGo(playlist, album, artist, song) {

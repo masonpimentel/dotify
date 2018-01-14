@@ -66,3 +66,7 @@ body {
     padding-top: 3px;
     padding-bottom: 3px;
 }
+
+#loader {
+    text-align: center;
+}

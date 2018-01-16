@@ -84,6 +84,7 @@ Route::post('/songs/byplaylist',function(){
         '" . $playlist . "';"));
 });
 
+/*
 Route::post('/songs/insert', function(){
     $album_name = Input::get('album_name');
     $artist = Input::get('artist');
@@ -104,6 +105,7 @@ Route::post('/songs/insert', function(){
     }
     return "Success";
 });
+*/
 
 Route::post('/songs/delete/name', function(){
     $song_name = Input::get('song_name');
@@ -316,6 +318,7 @@ Route::get('/playlists/stats', function(){
     }
 });
 
+/*
 Route::post('/playlists/create', function(){
     $username = Input::get('username');
     $playlist = Input::get('playlist');
@@ -328,6 +331,7 @@ Route::post('/playlists/create', function(){
     }
     return "Success";
 });
+*/
 
 Route::post('/playlists/insert', function(){
     $username = Input::get('username');

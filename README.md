@@ -13,11 +13,15 @@ Dotify is meant to provide a subset of the services provided by [Spotify](https:
 management system in which users are able to create playlists from a library of albums and songs. 
 
 There are two classes of users - administrators and users. Standard users have access to their own playlists,
-and all the songs in the Dotify library. The following credentials can be used - username: Porchwork, password: 123333
+and all the songs in the Dotify library. 
 
+## Standard users
+
+The following credentials can be used - username: Porchwork, password: 123333
 
 Users are able to search for songs by song name or genre:
 
+## Administrators
 
 Administrators have access to the administrator console. The following credentials can be used - username: SnXfZ947, 
 password: abcd123

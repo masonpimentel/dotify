@@ -1,5 +1,3 @@
-//if anyone sees this and wonders what on earth is happening here, bootstrap doesn't want to load
-//dynamically updated elements... so this is a workaround
 function createAlbumInfoModal(arg1, arg2, arg3, arg4, arg5, name) {
     return '<div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
         '<h4 class="modal-title">' + name + '</h4></div><div class="modal-body"><table class="table table-borderless">' +
@@ -58,8 +56,6 @@ function addSongGo() {
     var songName = document.getElementById("songName").value;
     var albumName = document.getElementById("albumName").value;
     var albumGenre = document.getElementById("albumGenre").value;
-    //var trackNumber = document.getElementById("trackNumber").value;
-    //hardcoding since we don't really use it
     var trackNumber = 1;
     var songLength = document.getElementById("songLength").value;
     var artistName = document.getElementById("artistName").value;
@@ -76,7 +72,6 @@ function addSongGo() {
     document.getElementById("songName").value = "";
     document.getElementById("albumName").value = "";
     document.getElementById("albumGenre").value = "";
-    //document.getElementById("trackNumber").value = "";
     document.getElementById("songLength").value = "";
     document.getElementById("artistName").value = "";
     document.getElementById("albumYear").value = "";
@@ -150,7 +145,6 @@ function changeRating(ratingId) {
  */
 function changeRatingGo(ratingId) {
     var newRating = document.getElementById("newRating").value;
-    //errorMessage("Please enter a rating > 0 and < " + MAX_RATING);
     if (newRating > MAX_RATING || newRating < 0) {
         $("#changeRating").modal("hide");
         errorMessage("Please enter a rating > 0 and <= " + MAX_RATING);
@@ -200,7 +194,6 @@ function addToPlaylist(album, artist, song) {
         username: lUname
     };
     $('#select_playlist').html(loader);
-    $("#addToPlaylist").removeData().modal("show");
     ajaxRequest("POST", "/playlists", "playlist_modal", req, album, artist, song);
 }
 

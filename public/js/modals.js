@@ -165,8 +165,8 @@ function changeRatingGo(ratingId) {
         song_name: songName,
         pid: pid
     };
-    ajaxRequest("POST", "/rating/update", "update_rating", req, ratingId, newRating);
     $("#changeRating").modal("hide");
+    ajaxRequest("POST", "/rating/update", "update_rating", req, ratingId, newRating);
 }
 
 function addPlaylist() {
@@ -187,8 +187,8 @@ function addPlaylistGo() {
         playlist: playlist,
         username: lUname
     };
-    ajaxRequest("POST", "/playlists/create", "add_playlist", req, playlist);
     $("#addPlaylist").modal("hide");
+    ajaxRequest("POST", "/playlists/create", "add_playlist", req, playlist);
 }
 
 function addPlaylistDisabled() {
@@ -200,8 +200,8 @@ function addToPlaylist(album, artist, song) {
         username: lUname
     };
     $('#select_playlist').html(loader);
-    ajaxRequest("POST", "/playlists", "playlist_modal", req, album, artist, song);
     $("#addToPlaylist").removeData().modal("show");
+    ajaxRequest("POST", "/playlists", "playlist_modal", req, album, artist, song);
 }
 
 function addToPlaylistGo(playlist, album, artist, song) {
@@ -214,8 +214,8 @@ function addToPlaylistGo(playlist, album, artist, song) {
         song_name: song,
         rating: rating
     };
-    ajaxRequest("POST", "/playlists/insert", "insert_into_playlist", req);
     $("#addToPlaylist").modal("hide");
+    ajaxRequest("POST", "/playlists/insert", "insert_into_playlist", req);
 }
 
 function playlistStats() {

@@ -1,8 +1,8 @@
 function login() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
-    ajaxRequest("GET", "/users", "users", "req", username, password);
     $("#login").modal("hide");
+    ajaxRequest("GET", "/users", "users", "req", username, password);
 }
 
 function checkAdmin(result, username) {

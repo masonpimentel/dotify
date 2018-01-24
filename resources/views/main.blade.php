@@ -141,6 +141,22 @@
     </div>
 </div>
 
+<div class="modal fade" id="loginWithCredentials">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+                <button type="text" class="btn btn-primary" onclick="loginWithCredentials('Porchwork', '123333')">Login as standard user</button>
+                <button type="text" class="btn btn-success" onclick="loginWithCredentials('SnXfZ947', 'abcd123')">Login as administrator</button>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="addSongDisabled">
     <div class="modal-dialog">
         <div class="modal-content">

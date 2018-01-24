@@ -5,6 +5,11 @@ function login() {
     ajaxRequest("GET", "/users", "users", "req", username, password);
 }
 
+function loginWithCredentials(username, password) {
+    $("#loginWithCredentials").modal("hide");
+    ajaxRequest("GET", "/users", "users", "req", username, password);
+}
+
 function checkAdmin(result, username) {
     for (var i = 0; i < result.length; i++) {
         if (result[i].uname == username) {

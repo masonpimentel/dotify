@@ -4,6 +4,9 @@ var lUname;
 //this disables adding songs and playlists
 var disableAdd = true;
 
+//button login instead of entering credentials
+var buttonLogin = true;
+
 /* Handler for text input
  *
  * Required
@@ -49,9 +52,15 @@ function handler(e, type, ratingId) {
 
 //starting point - this is called when the DOM is ready (according to jQuery)
 $(document).ready(function() {
-    $("#login").modal("show").on('shown.bs.modal', function() {
-        $('#username').focus();
-    });
+    if (buttonLogin) {
+        //login using buttons
+        $("#loginWithCredentials").modal({backdrop: 'static', keyboard: false}).modal("show");
+    } else {
+        //login using credentials
+        $("#login").modal("show").on('shown.bs.modal', function() {
+            $('#username').focus();
+        });
+    }
 });
 
 

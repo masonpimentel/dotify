@@ -54,7 +54,7 @@ function handler(e, type, ratingId) {
 $(document).ready(function() {
     if (buttonLogin) {
         //login using buttons
-        $("#loginWithCredentials").modal({backdrop: 'static', keyboard: false}).modal("show");
+        $("#loginWithCredentials").modal("show");
     } else {
         //login using credentials
         $("#login").modal("show").on('shown.bs.modal', function() {

@@ -94,11 +94,12 @@ function removeSongs() {
 }
 
 function removeSongsGo() {
-    $("#removeSongs").modal("hide");
-    var songNameDelete = document.getElementById("songNameDelete").value;
+    var songNameDelete = document.getElementById("songNameDelete");
     var req = {
-        song_name: songNameDelete
+        song_name: songNameDelete.value
     };
+    songNameDelete.value = '';
+    $("#removeSongs").modal("hide");
     ajaxRequest("POST", "/songs/delete/name", "delete_song", req);
 }
 
@@ -109,13 +110,15 @@ function removeSongsAlbum() {
 }
 
 function removeSongsAlbumGo() {
-    $("#removeSongsAlbum").modal("hide");
-    var albumNameDelete = document.getElementById("albumNameDelete").value;
-    var albumArtistDelete = document.getElementById("albumArtistDelete").value;
+    var albumNameDelete = document.getElementById("albumNameDelete");
+    var albumArtistDelete = document.getElementById("albumArtistDelete");
     var req = {
-        album_name: albumNameDelete,
-        artist: albumArtistDelete
+        album_name: albumNameDelete.value,
+        artist: albumArtistDelete.value
     };
+    albumNameDelete.value = '';
+    albumArtistDelete.value = '';
+    $("#removeSongsAlbum").modal("hide");
     ajaxRequest("POST", "/songs/delete/album", "delete_song_album", req);
 }
 

@@ -46,9 +46,21 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
             else if(action == "update_rating") {
                 insertRating(arg1, arg2);
             }
-            else if(action == "insert_song" || action == "delete_song" || action == "delete_song_album") {
+            else if(action == "delete_song") {
+                var res = JSON.parse(this.responseText);
+                if (res.length > 0) {
+                    successMessage("Success");
+                    clearTable();
+                    ajaxRequest("GET", "/songs", "songs", null);
+                }
+                else {
+                    errorMessage("Not found in library - no delete performed");
+                }
+            }
+            else if(action == "insert_song" || action == "delete_song_album") {
                 clearTable();
                 ajaxRequest("GET", "/songs", "songs", null);
+
             }
             else if(action == "search_song_genre" || action == "search_song_name") {
                 clearTable();

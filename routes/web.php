@@ -110,11 +110,12 @@ Route::post('/songs/insert', function(){
 Route::post('/songs/delete/name', function(){
     $song_name = Input::get('song_name');
     try{
+        $res = DB::select("SELECT song_name FROM song WHERE song_name LIKE '" . $song_name . "';");
         DB::select("DELETE FROM song WHERE song_name LIKE '" . $song_name . "';");
     } catch (Exception $e){
         return $e->getMessage();
     }
-    return "Success";
+    return $res;
 });
 
 Route::post('/songs/delete/album', function(){

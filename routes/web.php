@@ -122,12 +122,14 @@ Route::post('/songs/delete/album', function(){
     $album_name = Input::get('album_name');
     $artist = Input::get('artist');
     try{
+        $res = DB::select("SELECT * FROM song s INNER JOIN albumcontains ac ON s.sid=ac.sid WHERE album_name='"
+            .$album_name."' AND artist_name='".$artist."';");
         DB::select("DELETE s, ac FROM song s INNER JOIN albumcontains ac ON s.sid=ac.sid WHERE album_name='"
             .$album_name."' AND artist_name='".$artist."';");
     } catch (Exception $e){
         return $e->getMessage();
     }
-    return "Success";
+    return $res;
 });
 
 Route::post('songs/search/name', function(){
@@ -350,11 +352,11 @@ Route::post('/playlists/insert', function(){
             SELECT p.pid
             FROM playlist p, userplaylists up
             WHERE p.pid=up.pid and p.playlist_name='" . $playlist . "' AND up.uname='". $username ."');");
-        DB::select("INSERT INTO playlistsongs VALUES (curdate(), @sid_temp, @pid_temp, '". $rating ."');");
+        $res = DB::select("INSERT INTO playlistsongs VALUES (curdate(), @sid_temp, @pid_temp, '". $rating ."');");
     } catch (Exception $e){
         return $e->getMessage();
     }
-    return "Success";
+    return $res;
 });
 
 Route::post('/playlists/remove', function(){

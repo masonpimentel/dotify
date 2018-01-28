@@ -271,7 +271,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="text" class="btn btn-danger" onclick="removeSongsGo()">Remove songs</button>
+                <button type="text" class="btn btn-danger" onclick="removeSongsGo()">Remove song</button>
             </div>
         </div>
     </div>

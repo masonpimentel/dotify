@@ -28,6 +28,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
         }
         if (this.status == 200) {
             var arg;
+            var res;
             if (action == "users") {
                 checkUser(result, arg1, arg2);
             }
@@ -47,7 +48,13 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 insertRating(arg1, arg2);
             }
             else if(action == "delete_song") {
-                var res = JSON.parse(this.responseText);
+                try {
+                    res = JSON.parse(this.responseText);
+                }
+                catch(e) {
+                    console.log(e);
+                    errorMessage("An unknown error occurred");
+                }
                 if (res.length > 0) {
                     successMessage("Success");
                     clearTable();
@@ -57,10 +64,36 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                     errorMessage("Not found in library - no delete performed");
                 }
             }
-            else if(action == "insert_song" || action == "delete_song_album") {
+            else if (action == "insert_into_playlist") {
+                if (this.responseText.includes("Duplicate entry")) {
+                    errorMessage("Already in playlist - not added");
+                }
+                else {
+                    successMessage("Success");
+                }
+
+            }
+            else if(action == "insert_song") {
                 clearTable();
                 ajaxRequest("GET", "/songs", "songs", null);
 
+            }
+            else if(action == "delete_song_album") {
+                try {
+                    res = JSON.parse(this.responseText);
+                }
+                catch(e) {
+                    console.log(e);
+                    errorMessage("An unknown error occurred");
+                }
+                if (res.length > 0) {
+                    successMessage("Success");
+                    clearTable();
+                    ajaxRequest("GET", "/songs", "songs", null);
+                }
+                else {
+                    errorMessage("No matching name and artist - not deleted");
+                }
             }
             else if(action == "search_song_genre" || action == "search_song_name") {
                 clearTable();

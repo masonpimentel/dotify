@@ -83,7 +83,8 @@ function insertSongs(result, action, playlist) {
         var genre = document.createElement("td");
         genre.innerHTML = element.genre_name;
         var songLength = document.createElement("td");
-        songLength.innerHTML = element.song_length;
+        var numString = element.song_length.toFixed(2);
+        songLength.innerHTML = numString.replace(".", ":");
 
         var album = document.createElement("td");
         var albumName = element.album_name;

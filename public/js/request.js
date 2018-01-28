@@ -56,7 +56,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                     errorMessage("An unknown error occurred");
                 }
                 if (res.length > 0) {
-                    successMessage("Success");
+                    successMessage("Song successfully deleted");
                     clearTable();
                     ajaxRequest("GET", "/songs", "songs", null);
                 }
@@ -69,7 +69,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                     errorMessage("Already in playlist - not added");
                 }
                 else {
-                    successMessage("Success");
+                    successMessage("Successfully added to " + arg1);
                 }
 
             }
@@ -87,7 +87,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                     errorMessage("An unknown error occurred");
                 }
                 if (res.length > 0) {
-                    successMessage("Success");
+                    successMessage("Album successfully deleted");
                     clearTable();
                     ajaxRequest("GET", "/songs", "songs", null);
                 }
@@ -165,10 +165,10 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
         }
     };
     request.onerror = function() {
-        window.alert("Error " + this.status);
+        errorMessage("Error " + this.status);
     };
     request.ontimeout = function() {
-        window.alert("Timeout");
+        errorMessage("Timeout: please check your internet connection");
     };
     if (action == "playlists" || action == "insert_song" || action == "delete_song" || action == "insert_playlist"
         || action == "update_rating" || action == "delete_song_album" || action == "search_song_name"

@@ -211,7 +211,7 @@ function addToPlaylistGo(playlist, album, artist, song) {
         rating: rating
     };
     $("#addToPlaylist").modal("hide");
-    ajaxRequest("POST", "/playlists/insert", "insert_into_playlist", req);
+    ajaxRequest("POST", "/playlists/insert", "insert_into_playlist", req, playlist);
 }
 
 function playlistStats() {

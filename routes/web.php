@@ -386,11 +386,11 @@ Route::post('/restore', function(){
     if ($res != 11) {
         return "Error: database not dropped";
     }
-    $res = DB::connection()->getPdo()->exec('create database  ' . env('DB_DATABASE)'));
+    $res = DB::connection()->getPdo()->exec('create database  ' . env('DB_DATABASE'));
     if ($res != 1) {
         return "Error: could not create DB";
     }
-    $res = DB::connection()->getPdo()->exec('use ' . env('DB_DATABASE))'));
+    $res = DB::connection()->getPdo()->exec('use ' . env('DB_DATABASE'));
     if ($res != 0) {
         return "Error: issue with use statement";
     }
@@ -583,7 +583,33 @@ Route::post('/restore', function(){
         DB::select('insert into song values (1063, "Dark Warrior", 6, 2.48)');
         DB::select('insert into albumcontains values ("Songs from ASOT", "Armin van Buuren", 1063)');
 
+        // Porter
         DB::select('insert into albumcategory values ("Worlds", "Porter Robinson", 2014, "Complextro")');
+        DB::select('insert into song values (1064, "Divinity", 1, 6.08)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1064)');
+        DB::select('insert into song values (1065, "Sad Machine", 2, 5.50)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1065)');
+        DB::select('insert into song values (1066, "Years of War", 3, 3.56)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1066)');
+        DB::select('insert into song values (1067, "Flicker", 4, 4.39)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1067)');
+        DB::select('insert into song values (1068, "Fresh Static Snow", 5, 5.58)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1068)');
+        DB::select('insert into song values (1069, "Polygon Dust", 6, 3.29)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1069)');
+        DB::select('insert into song values (1070, "Hear the Bells", 7, 4.46)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1070)');
+        DB::select('insert into song values (1071, "Natural Light", 8, 2.21)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1071)');
+        DB::select('insert into song values (1072, "Lionhearted", 9, 4.24)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1072)');
+        DB::select('insert into song values (1073, "Sea of Voices", 10, 4.59)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1073)');
+        DB::select('insert into song values (1074, "Fellow Feeling", 11, 5.49)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1074)');
+        DB::select('insert into song values (1075, "Goodbye to a World", 12, 5.28)');
+        DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1075)');
+
     //Playlists
 
         //All songs
@@ -656,10 +682,21 @@ Route::post('/restore', function(){
         DB::select('insert into playlistsongs values ("2017-03-16", 1006, 5002, 3)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1004, 5002, 3)');
 
-        //Future house
+        //My playlist
         DB::select('insert into playlistsongs values ("2017-03-16", 1047, 5003, 5)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1048, 5003, 5)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1049, 5003, 4)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1049, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1069, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1072, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1063, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1059, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1058, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1052, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1051, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1057, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1011, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1004, 5003, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1001, 5003, 5)');
     } catch (Exception $e) {
         return $e->getMessage();
     }

@@ -346,7 +346,7 @@
                 <h4 class="modal-title">Add playlist</h4>
             </div>
             <div class="modal-body">
-                Disabled, but please feel free to add songs to the current playlist!
+                Disabled, but please feel free to add songs to the current playlists!
             </div>
             <div class="modal-footer">
                 <button type="text" class="btn btn-danger" onclick="addPlaylistDisabled()">Close</button>

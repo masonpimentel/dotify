@@ -382,15 +382,15 @@ Route::post('/playlists/remove', function(){
 });
 
 Route::post('/restore', function(){
-    $res = DB::connection()->getPdo()->exec('drop database if exists heroku_6f66a796c5d0830');
+    $res = DB::connection()->getPdo()->exec('drop database if exists ' . env('DB_DATABASE'));
     if ($res != 11) {
         return "Error: database not dropped";
     }
-    $res = DB::connection()->getPdo()->exec('create database heroku_6f66a796c5d0830');
+    $res = DB::connection()->getPdo()->exec('create database  ' . env('DB_DATABASE)'));
     if ($res != 1) {
         return "Error: could not create DB";
     }
-    $res = DB::connection()->getPdo()->exec('use heroku_6f66a796c5d0830');
+    $res = DB::connection()->getPdo()->exec('use ' . env('DB_DATABASE))'));
     if ($res != 0) {
         return "Error: issue with use statement";
     }
@@ -406,16 +406,21 @@ Route::post('/restore', function(){
         DB::select('create table adminprivileges ( title varchar(20) not null, description varchar(50) not null, primary key (title, description), foreign key (title) references admin (title) on delete no action, foreign key (description) references privilege (description) on delete no action)');
         DB::select('create table userplaylists ( uname varchar(20) not null, pid int not null, primary key (uname, pid), foreign key (uname) references user (uname) on delete cascade on update cascade, foreign key (pid) references playlist (pid) on delete cascade on update cascade)');
         DB::select('create table playlistsongs ( added_date char(10) not null, sid int not null, pid int not null,  rating int null, primary key (sid, pid), foreign key (sid) references song (sid) on delete cascade on update cascade, foreign key (pid) references playlist (pid) on delete cascade on update cascade, check (rating <= 5 and rating >= 0))');
+
         DB::select('insert into genre (genre_name) values ("Hip-Hop")');
         DB::select('insert into genre (genre_name) values ("Metal")');
         DB::select('insert into genre (genre_name) values ("Rock")');
         DB::select('insert into genre (genre_name) values ("Pop")');
         DB::select('insert into genre (genre_name) values ("Indie")');
         DB::select('insert into genre (genre_name) values ("Future House")');
+        DB::select('insert into genre (genre_name) values ("Trance")');
+        DB::select('insert into genre (genre_name) values ("Complextro")');
+
         DB::select('insert into playlist values (5000, "All Songs")');
         DB::select('insert into playlist values (5001, "Rock and Roll")');
         DB::select('insert into playlist values (5002, "Fave Road Tunes")');
-        DB::select('insert into playlist values (5003, "Future House")');
+        DB::select('insert into playlist values (5003, "My Playlist")');
+
         DB::select('insert into user values ("FantasyBuddy", 123456, "Marketta", "Timm", 42, null)');
         DB::select('insert into user values ("SnXfZ947", "abcd123", "Ayy", "Lmao", 23, null)');
         DB::select('insert into user values ("Sailor Bacon", 112200, "Rigoberta", "Nuckles", 25, "rn180@gmail.com")');
@@ -430,59 +435,43 @@ Route::post('/restore', function(){
         DB::select('insert into adminprivileges values ("Owner", "Modify Library")');
         DB::select('insert into adminprivileges values ("Owner", "Access Source Code")');
         DB::select('insert into adminprivileges values ("Administrator", "Modify Library")');
+
         DB::select('insert into userplaylists values ("Sailor Bacon", 5000)');
         DB::select('insert into userplaylists values ("Porchwork", 5001)');
         DB::select('insert into userplaylists values ("MafiaPride", 5002)');
         DB::select('insert into userplaylists values ("SnXfZ947", 5003)');
-        DB::select('insert into albumcategory values ("To Pimp a Butterfly", "Kendrick Lamar", 2015, "Hip-Hop")');
-        DB::select('insert into song values (1000, "Wesleys Theory", 1, 4.47)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1000)');
-        DB::select('insert into song values (1001, "For Free? (Interlude)", 2, 2.1)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1001)');
-        DB::select('insert into song values (1002, "King Kunta", 3, 3.54)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1002)');
-        DB::select('insert into song values (1003, "Institutionalized", 4, 4.31)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1003)');
-        DB::select('insert into song values (1004, "These Walls", 5, 5.0)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1004)');
-        DB::select('insert into song values (1005, "U", 6, 4.28)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1005)');
-        DB::select('insert into song values (1006, "Alright", 7, 3.39)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1006)');
-        DB::select('insert into song values (1007, "For Sale? (Interlude)", 8, 4.51)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1007)');
-        DB::select('insert into song values (1008, "Momma", 9, 4.43)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1008)');
-        DB::select('insert into song values (1009, "Hood Politics", 10, 4.52)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1009)');
-        DB::select('insert into song values (1010, "How Much a Dollar Cost", 11, 4.21)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1010)');
-        DB::select('insert into song values (1011, "Complexion (A Zulu Love)", 12, 4.23)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1011)');
-        DB::select('insert into song values (1012, "The Blacker the Berry", 13, 5.28)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1012)');
-        DB::select('insert into song values (1013, "You Aint Gotta Lie (Momma Said)", 14, 4.01)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1013)');
-        DB::select('insert into song values (1014, "I", 15, 5.36)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1014)');
-        DB::select('insert into song values (1015, "Mortal Man", 16, 12.07)');
-        DB::select('insert into albumcontains values ("To Pimp a Butterfly", "Kendrick Lamar", 1015)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1000, 5000, 0)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1001, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1002, 5000, 1)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1003, 5000, 2)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1004, 5000, 4)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1005, 5000, 4)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1006, 5000, 5)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1007, 5000, 5)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1008, 5000, 1)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1009, 5000, 1)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1010, 5000, 1)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1011, 5000, 2)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1012, 5000, 1)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1013, 5000, 2)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1014, 5000, 1)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1015, 5000, 0)');
+
+    //Songs
+
+        //Above & Beyond
+        DB::select('insert into albumcategory values ("Common Ground", "Above & Beyond", 2018, "Trance")');
+        DB::select('insert into song values (1000, "The Inconsistency Principle", 1, 3.16)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1000)');
+        DB::select('insert into song values (1001, "My Own Hymn", 2, 3.48)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1001)');
+        DB::select('insert into song values (1002, "Northern Soul", 3, 5.35)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1002)');
+        DB::select('insert into song values (1003, "Naked", 4, 5.23)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1003)');
+        DB::select('insert into song values (1004, "Sahara Love", 5, 5.07)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1004)');
+        DB::select('insert into song values (1005, "Happiness Amplified", 6, 5.32)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1005)');
+        DB::select('insert into song values (1006, "Is It Love (1001)", 7, 5.44)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1006)');
+        DB::select('insert into song values (1007, "Cold Feet", 8, 5.35)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1007)');
+        DB::select('insert into song values (1008, "Tightrope", 9, 3.24)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1008)');
+        DB::select('insert into song values (1009, "Alright Now", 10, 5.37)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1009)');
+        DB::select('insert into song values (1010, "Bittersweet & Blue", 11, 5.26)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1010)');
+        DB::select('insert into song values (1011, "Always", 12, 4.10)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1011)');
+        DB::select('insert into song values (1012, "Common Ground", 13, 3.32)');
+        DB::select('insert into albumcontains values ("Common Ground", "Above & Beyond", 1012)');
+
         DB::select('insert into albumcategory values ("Ride the Lightning", "Metallica", 1984, "Metal")');
         DB::select('insert into song values (1016, "Fight Fire With Fire", 1, 4.44)');
         DB::select('insert into albumcontains values ("Ride the Lightning", "Metallica", 1016)');
@@ -500,14 +489,7 @@ Route::post('/restore', function(){
         DB::select('insert into albumcontains values ("Ride the Lightning", "Metallica", 1022)');
         DB::select('insert into song values (1023, "The Call of Ktulu", 8, 8.52)');
         DB::select('insert into albumcontains values ("Ride the Lightning", "Metallica", 1023)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1016, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1017, 5000, 4)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1018, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1019, 5000, 5)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1020, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1021, 5000, 5)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1022, 5000, 0)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1023, 5000, 0)');
+
         DB::select('insert into albumcategory values ("Dark Side of the Moon", "Pink Floyd", 1973, "Rock")');
         DB::select('insert into song values (1024, "Speak to Me", 1, 1.13)');
         DB::select('insert into albumcontains values ("Dark Side of the Moon", "Pink Floyd", 1024)');
@@ -529,16 +511,7 @@ Route::post('/restore', function(){
         DB::select('insert into albumcontains values ("Dark Side of the Moon", "Pink Floyd", 1032)');
         DB::select('insert into song values (1033, "Eclipse", 10, 2.02)');
         DB::select('insert into albumcontains values ("Dark Side of the Moon", "Pink Floyd", 1033)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1024, 5000, 1)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1025, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1026, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1027, 5000, 4)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1028, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1029, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1030, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1031, 5000, 5)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1032, 5000, 3)');
-        DB::select('insert into playlistsongs values ("2017-03-16", 1033, 5000, 0)');
+
         DB::select('insert into albumcategory values ("1989", "Taylor Swift", 2014, "Pop")');
         DB::select('insert into song values (1034, "Welcome to New York", 1, 3.32)');
         DB::select('insert into albumcontains values ("1989", "Taylor Swift", 1034)');
@@ -566,6 +539,8 @@ Route::post('/restore', function(){
         DB::select('insert into albumcontains values ("1989", "Taylor Swift", 1045)');
         DB::select('insert into song values (1046, "Clean", 13, 4.3)');
         DB::select('insert into albumcontains values ("1989", "Taylor Swift", 1046)');
+
+        //Oliver Heldens
         DB::select('insert into albumcategory values ("2016 Mix", "Oliver Heldens", 2016, "Future House")');
         DB::select('insert into song values (1047, "Waiting", 1, 3.23)');
         DB::select('insert into albumcontains values ("2016 Mix", "Oliver Heldens", 1047)');
@@ -573,6 +548,77 @@ Route::post('/restore', function(){
         DB::select('insert into albumcontains values ("2016 Mix", "Oliver Heldens", 1048)');
         DB::select('insert into song values (1049, "Bunnydance", 3, 4.08)');
         DB::select('insert into albumcontains values ("2016 Mix", "Oliver Heldens", 1049)');
+
+        // Chocolate Puma
+        DB::select('insert into albumcategory values ("2017 Mix", "Chocolate Puma", 2017, "Future House")');
+        DB::select('insert into song values (1050, "HIPPO", 1, 3.24)');
+        DB::select('insert into albumcontains values ("2017 Mix", "Chocolate Puma", 1050)');
+        DB::select('insert into song values (1051, "Where You Iz", 2, 3.56)');
+        DB::select('insert into albumcontains values ("2017 Mix", "Chocolate Puma", 1051)');
+        DB::select('insert into song values (1052, "Scrub the Ground", 3, 2.49)');
+        DB::select('insert into albumcontains values ("2017 Mix", "Chocolate Puma", 1052)');
+        DB::select('insert into song values (1053, "The Stars are Mine", 4, 4.14)');
+        DB::select('insert into albumcontains values ("2017 Mix", "Chocolate Puma", 1053)');
+        DB::select('insert into song values (1054, "Lullaby", 5, 3.33)');
+        DB::select('insert into albumcontains values ("2017 Mix", "Chocolate Puma", 1054)');
+        DB::select('insert into song values (1055, "Take the Ride", 6, 3.13)');
+        DB::select('insert into albumcontains values ("2017 Mix", "Chocolate Puma", 1055)');
+        DB::select('insert into song values (1056, "Steam Train", 7, 3.38)');
+        DB::select('insert into albumcontains values ("2017 Mix", "Chocolate Puma", 1056)');
+        DB::select('insert into song values (1057, "Space Sheep", 8, 4.21)');
+        DB::select('insert into albumcontains values ("2017 Mix", "Chocolate Puma", 1057)');
+
+        // Armin
+        DB::select('insert into albumcategory values ("Songs from ASOT", "Armin van Buuren", 2017, "Trance")');
+        DB::select('insert into song values (1058, "My Symphony", 1, 3.10)');
+        DB::select('insert into albumcontains values ("Songs from ASOT", "Armin van Buuren", 1058)');
+        DB::select('insert into song values (1059, "Sunny Days", 2, 3.15)');
+        DB::select('insert into albumcontains values ("Songs from ASOT", "Armin van Buuren", 1059)');
+        DB::select('insert into song values (1060, "Intense", 3, 8.48)');
+        DB::select('insert into albumcontains values ("Songs from ASOT", "Armin van Buuren", 1060)');
+        DB::select('insert into song values (1061, "EIFORYA", 4, 6.04)');
+        DB::select('insert into albumcontains values ("Songs from ASOT", "Armin van Buuren", 1061)');
+        DB::select('insert into song values (1062, "You Are", 5, 2.57)');
+        DB::select('insert into albumcontains values ("Songs from ASOT", "Armin van Buuren", 1062)');
+        DB::select('insert into song values (1063, "Dark Warrior", 6, 2.48)');
+        DB::select('insert into albumcontains values ("Songs from ASOT", "Armin van Buuren", 1063)');
+
+        DB::select('insert into albumcategory values ("Worlds", "Porter Robinson", 2014, "Complextro")');
+    //Playlists
+
+        //All songs
+        DB::select('insert into playlistsongs values ("2017-03-16", 1000, 5000, 0)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1001, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1002, 5000, 1)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1003, 5000, 2)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1004, 5000, 4)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1005, 5000, 4)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1006, 5000, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1007, 5000, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1008, 5000, 1)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1009, 5000, 1)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1010, 5000, 1)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1011, 5000, 2)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1012, 5000, 1)');
+
+        DB::select('insert into playlistsongs values ("2017-03-16", 1016, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1017, 5000, 4)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1018, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1019, 5000, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1020, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1021, 5000, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1022, 5000, 0)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1023, 5000, 0)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1024, 5000, 1)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1025, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1026, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1027, 5000, 4)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1028, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1029, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1030, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1031, 5000, 5)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1032, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1033, 5000, 0)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1034, 5000, 1)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1035, 5000, 0)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1036, 5000, 0)');
@@ -589,6 +635,8 @@ Route::post('/restore', function(){
         DB::select('insert into playlistsongs values ("2017-03-16", 1047, 5000, 3)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1048, 5000, 2)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1049, 5000, 3)');
+
+        //Rock and roll
         DB::select('insert into playlistsongs values ("2017-03-16", 1024, 5001, 5)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1025, 5001, 5)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1026, 5001, 5)');
@@ -599,12 +647,16 @@ Route::post('/restore', function(){
         DB::select('insert into playlistsongs values ("2017-03-16", 1031, 5001, 5)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1032, 5001, 5)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1033, 5001, 5)');
+
+        //Fave road tunes
         DB::select('insert into playlistsongs values ("2017-03-16", 1028, 5002, 1)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1034, 5002, 3)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1035, 5002, 3)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1016, 5002, 4)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1006, 5002, 3)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1004, 5002, 3)');
+
+        //Future house
         DB::select('insert into playlistsongs values ("2017-03-16", 1047, 5003, 5)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1048, 5003, 5)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1049, 5003, 4)');

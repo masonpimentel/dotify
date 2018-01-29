@@ -244,7 +244,12 @@ function albumStats() {
 }
 
 function albumStatsSet(arg1, arg2, arg3, arg4, arg5) {
-    var modalValue = createAlbumStatsModal(arg1.toFixed(2), arg2.toFixed(2), parseInt(arg3).toFixed(2), parseInt(arg4).toFixed(2), arg5.toFixed(2));
+    //arg1: int
+    //arg2: int
+    //arg3: dec
+    //arg4: int
+    //arg5: int
+    var modalValue = createAlbumStatsModal(parseInt(arg1), parseInt(arg2), parseFloat(arg3).toFixed(2), parseInt(arg4), parseInt(arg5));
     $('#albumStats').on('show.bs.modal', function(){
         $('#albumStats').html(modalValue);
     }).modal("show");
@@ -262,7 +267,16 @@ function findAlbumInfo(albumId) {
 }
 
 function findAlbumInfoSet(arg1, arg2, arg3, arg4, arg5, name) {
-    var modalValue = createAlbumInfoModal(arg1.toFixed(2), arg2.toFixed(2), arg3.toFixed(2), arg4.toFixed(2), arg5.toFixed(2), name);
+    //arg1: album length: time
+    //arg2: avg song length: time
+    //arg3: max song length: time
+    //arg4: min song length: time
+    //arg5: total songs: int
+    var album_length = timeArtih(arg1.toFixed(2));
+    var avg_length = timeArtih(arg2.toFixed(2));
+    var max_length = timeArtih(arg3.toFixed(2));
+    var min_length = timeArtih(arg4.toFixed(2));
+    var modalValue = createAlbumInfoModal(album_length, avg_length, max_length, min_length, parseInt(arg5), name);
     $('#albumInfo').on('show.bs.modal', function(){
         $('#albumInfo').html(modalValue);
     }).modal("show");
@@ -272,4 +286,23 @@ function findAlbumInfoGo() {
     $("#albumInfo").modal("hide");
 }
 
+function timeArtih(time) {
+    var min = time.split(".")[0];
+    var sec = time.split(".")[1];
+    var hr;
 
+    var sec_carry = Math.floor(parseInt(sec) / 60);
+    min = parseInt(min) + sec_carry;
+
+    hr = Math.floor(parseInt(min) / 60);
+
+    sec = parseInt(sec) % 60;
+    min = parseInt(min) % 60;
+
+    var time_ret = min.toString().padStart(2, "0") + ":" + sec.toString().padStart(2, "0");
+    if (hr > 0) {
+        time_ret = hr.toString() + ":" + time_ret;
+    }
+
+    return time_ret
+}

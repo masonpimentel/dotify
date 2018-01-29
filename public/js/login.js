@@ -34,6 +34,7 @@ function checkUser(result, username, password) {
         var req = {
             username: username
         };
+        clearTable();
         ajaxRequest("GET", "/admins", "admins", "dummy" ,username);
         ajaxRequest("POST", "/playlists", "playlists", req, username);
         ajaxRequest("GET", "/songs", "songs", null);

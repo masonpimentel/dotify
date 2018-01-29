@@ -116,7 +116,11 @@
                 </tr>
                 </thead>
                 <tbody id="songs_table">
-
+                    <tr>
+                        <td id="plslogin" colspan="6" class="text-center">
+                            <b>Please <a href='javascript:$("#loginWithCredentials").modal("show");'>log in</a></b>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

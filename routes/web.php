@@ -661,6 +661,32 @@ Route::post('/restore', function(){
         DB::select('insert into playlistsongs values ("2017-03-16", 1047, 5000, 3)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1048, 5000, 2)');
         DB::select('insert into playlistsongs values ("2017-03-16", 1049, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1050, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1051, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1052, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1053, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1054, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1055, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1056, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1057, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1058, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1059, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1060, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1061, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1062, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1063, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1064, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1065, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1066, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1067, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1068, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1069, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1070, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1071, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1072, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1073, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1074, 5000, 3)');
+        DB::select('insert into playlistsongs values ("2017-03-16", 1075, 5000, 3)');
 
         //Rock and roll
         DB::select('insert into playlistsongs values ("2017-03-16", 1024, 5001, 5)');

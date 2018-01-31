@@ -33,25 +33,21 @@
 
     <div id="searches" style="display:none;">
         <div class="row bmargin">
-            <div class="col-md-2">
+            <div class="col-md-12 col-lg-2">
                 Search by song name:
             </div>
-            <div class="col-md-2">
+            <div class="col-md-12 col-lg-10">
                 <input type="text" id="songSearch" onkeypress="handler(event, 'songsearch')">
-            </div>
-            <div class="col-md-2">
-                <button type="text" class="btn btn-primary" onclick="searchSongsNameGo()">Search</button>
+                <button type="text" class="btn btn-primary sbutton" onclick="searchSongsNameGo()">Search</button>
             </div>
         </div>
         <div class="row bmargin">
-            <div class="col-md-2">
+            <div class="col-md-12 col-lg-2">
                 Search by genre:
             </div>
-            <div class="col-md-2">
+            <div class="col-md-12 col-lg-10">
                 <input type="text" id="genreSearch" onkeypress="handler(event, 'genresearch')">
-            </div>
-            <div class="col-md-2">
-                <button type="text" class="btn btn-primary" onclick="searchSongsGenreGo()">Search</button>
+                <button type="text" class="btn btn-primary sbutton" onclick="searchSongsGenreGo()">Search</button>
             </div>
         </div>
         <div class="row bmargin">

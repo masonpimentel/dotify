@@ -153,8 +153,15 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 ajaxRequest("POST", "/playlists", "playlists", req, lUname);
             }
             else if(action == "remove_from_playlist") {
-                clearTable();
-                displayPlaylist(arg1);
+                if (this.responseText.includes("Success")) {
+                    successMessage("Successfully removed from playlist");
+                    clearTable();
+                    displayPlaylist(arg1);
+                }
+                else {
+                    errorMessage("There was an error removing from this playlist - please try again");
+                }
+
             }
             else if(action == "playlist_modal") {
                 createAddToPlaylistModal(result, arg1, arg2, arg3);

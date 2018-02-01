@@ -148,7 +148,8 @@ function changeRating(ratingId) {
  */
 function changeRatingGo(ratingId) {
     var newRating = document.getElementById("newRating").value;
-    if (newRating > MAX_RATING || newRating < 0) {
+    var regex = /^([1-5]){1}$/;
+    if (!regex.test(newRating)) {
         $("#changeRating").modal("hide");
         errorMessage("Please enter a rating > 0 and <= " + MAX_RATING);
         return;

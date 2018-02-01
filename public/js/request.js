@@ -45,7 +45,13 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 insertSongs(result, "playlist", arg1);
             }
             else if(action == "update_rating") {
-                insertRating(arg1, arg2);
+                if (this.responseText.includes("Success")) {
+                    insertRating(arg1, arg2);
+                    successMessage("Rating updated")
+                }
+                else {
+                    errorMessage("There was an error updating the rating - please try again")
+                }
             }
             else if(action == "delete_song") {
                 try {

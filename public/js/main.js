@@ -51,7 +51,7 @@ function handler(e, type, ratingId) {
 }
 
 //starting point - this is called when the DOM is ready (according to jQuery)
-$(document).ready(function() {
+window.onload = function() {
     if (buttonLogin) {
         //login using buttons
         $("#loginWithCredentials").modal("show");
@@ -61,7 +61,7 @@ $(document).ready(function() {
             $('#username').focus();
         });
     }
-});
+};
 
 
 

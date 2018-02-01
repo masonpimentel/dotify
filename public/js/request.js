@@ -158,7 +158,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
             }
         }
         else {
-            window.alert("Error " + this.status);
+            errorMessage("Error " + this.status);
         }
         if (action === "songs" || action === "restore") {
             waitingDialog.hide();

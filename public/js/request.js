@@ -34,7 +34,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 }
                 else {
                     errorMessage("There was an error communicating with the server - please try again");
-                    throw e;
+                    return;
                 }
             }
         }
@@ -208,7 +208,7 @@ function checkSuccess(res) {
         }
         else {
             errorMessage("There was an error communicating with the server - please try again");
-            throw e;
+            throw "Error communicating with the server";
         }
     }
     return parsed_res;

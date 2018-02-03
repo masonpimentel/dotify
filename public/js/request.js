@@ -38,10 +38,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 }
             }
         }
-        if (!result) {
-            console.log("Result not JSON");
-        }
-        else if (this.status == 200) {
+        if (this.status == 200) {
             var arg;
             var res;
             if (action == "users") {
@@ -171,7 +168,6 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 createAddToPlaylistModal(result, arg1, arg2, arg3);
             }
             else if(action == "restore") {
-                checkSuccess(this.responseText);
                 window.location.reload(true);
             }
         }

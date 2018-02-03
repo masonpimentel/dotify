@@ -399,6 +399,7 @@ function delTables() {
     DB::statement('DROP TABLE IF EXISTS genre;');
     DB::statement('DROP TABLE IF EXISTS user;');
     DB::statement('DROP TABLE IF EXISTS playlist;');
+    DB::statement('DROP TABLE IF EXISTS admin;');
     DB::statement('DROP TABLE IF EXISTS albumcategory;');
     DB::statement('DROP TABLE IF EXISTS albumcontains;');
     DB::statement('DROP TABLE IF EXISTS privilege;');

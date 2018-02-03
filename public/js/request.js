@@ -79,7 +79,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 if (this.responseText.includes("Duplicate entry")) {
                     errorMessage("Already in playlist - not added");
                 }
-                else if(this.responseText.includes("Success")) {
+                else if(this.responseText.includes("[]")) {
                     successMessage("Successfully added to " + arg1);
                 }
                 else {

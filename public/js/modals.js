@@ -141,6 +141,17 @@ function changeRating(ratingId) {
     });
 }
 
+function checkRatingVal(rating) {
+    var regex = /^([1-5]){1}$/;
+    if (!regex.test(rating)) {
+        errorMessage("Please enter a rating > 0 and <= " + MAX_RATING);
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
 /* Insert new rating
  *
  * Required
@@ -148,10 +159,8 @@ function changeRating(ratingId) {
  */
 function changeRatingGo(ratingId) {
     var newRating = document.getElementById("newRating").value;
-    var regex = /^([1-5]){1}$/;
-    if (!regex.test(newRating)) {
+    if (!checkRatingVal(newRating)) {
         $("#changeRating").modal("hide");
-        errorMessage("Please enter a rating > 0 and <= " + MAX_RATING);
         return;
     }
     document.getElementById("newRating").value = "";
@@ -202,14 +211,19 @@ function addToPlaylist(album, artist, song) {
 }
 
 function addToPlaylistGo(playlist, album, artist, song) {
-    var rating = document.getElementById("playlistRating").value;
+    var rating = document.getElementById("playlistRating");
+    if (!checkRatingVal(rating.value)) {
+        rating.value = '3';
+        $("#addToPlaylist").modal("hide");
+        return;
+    }
     var req = {
         username: lUname,
         playlist: playlist,
         album_name: album,
         artist: artist,
         song_name: song,
-        rating: rating
+        rating: rating.value
     };
     $("#addToPlaylist").modal("hide");
     ajaxRequest("POST", "/playlists/insert", "insert_into_playlist", req, playlist);

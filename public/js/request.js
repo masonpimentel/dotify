@@ -24,9 +24,24 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
     request.onload = function () {
         if (action != "update_rating" && action != "delete_song" && action != "insert_song" && action != "delete_song_album" && action !=
             "add_playlist" && action != "remove_from_playlist" && action != "insert_into_playlist" && action != "restore") {
-            var result = JSON.parse(this.responseText);
+            try {
+                var result = JSON.parse(this.responseText);
+            }
+            catch(e) {
+                if (this.responseText.includes("table or view not found") || this.responseText.includes("Unknown database")) {
+                    warningMessage("Last database restore may have been unsuccessful - attempting to fix now");
+                    ajaxRequest("POST", "/restore", "restore");
+                }
+                else {
+                    errorMessage("There was an error communicating with the server - please try again");
+                    throw e;
+                }
+            }
         }
-        if (this.status == 200) {
+        if (!result) {
+            console.log("Result not JSON");
+        }
+        else if (this.status == 200) {
             var arg;
             var res;
             if (action == "users") {
@@ -50,21 +65,14 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                     successMessage("Rating updated")
                 }
                 else {
-                    errorMessage("There was an error updating the rating - please try again")
+                    errorMessage("There was an error updating the rating - please try again");
                 }
             }
             else if(action == "delete_song") {
-                try {
-                    res = JSON.parse(this.responseText);
-                }
-                catch(e) {
-                    console.log(e);
-                    errorMessage("An unknown error occurred");
-                }
+                res = checkSuccess(this.responseText);
                 if (res.length > 0) {
                     successMessage("Song successfully deleted");
-                    clearTable();
-                    ajaxRequest("GET", "/songs", "songs", null);
+                    songsView();
                 }
                 else {
                     errorMessage("Not found in library - no delete performed");
@@ -74,8 +82,11 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 if (this.responseText.includes("Duplicate entry")) {
                     errorMessage("Already in playlist - not added");
                 }
-                else {
+                else if(this.responseText.includes("Success")) {
                     successMessage("Successfully added to " + arg1);
+                }
+                else {
+                    errorMessage("There was an error communicating with the server - please try again");
                 }
 
             }
@@ -85,17 +96,10 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
 
             }
             else if(action == "delete_song_album") {
-                try {
-                    res = JSON.parse(this.responseText);
-                }
-                catch(e) {
-                    console.log(e);
-                    errorMessage("An unknown error occurred");
-                }
+                res = checkSuccess(this.responseText);
                 if (res.length > 0) {
                     successMessage("Album successfully deleted");
-                    clearTable();
-                    ajaxRequest("GET", "/songs", "songs", null);
+                    songsView();
                 }
                 else {
                     errorMessage("No matching name and artist - not deleted");
@@ -167,6 +171,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
                 createAddToPlaylistModal(result, arg1, arg2, arg3);
             }
             else if(action == "restore") {
+                checkSuccess(this.responseText);
                 window.location.reload(true);
             }
         }
@@ -178,7 +183,7 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
         }
     };
     request.onerror = function() {
-        errorMessage("Error " + this.status);
+        errorMessage("There was an error communicating with the server - please try again");
     };
     request.ontimeout = function() {
         errorMessage("Timeout: please check your internet connection");
@@ -194,4 +199,21 @@ function ajaxRequest(type, url, action, req, arg1, arg2, arg3, arg4) {
         request.send();
     }
 
+}
+
+function checkSuccess(res) {
+    try {
+        var parsed_res = JSON.parse(res);
+    }
+    catch(e) {
+        if (res.includes("table or view not found")) {
+            warningMessage("Last database restore may have been unsuccessful - attempting to fix now");
+            ajaxRequest("POST", "/restore", "restore");
+        }
+        else {
+            errorMessage("There was an error communicating with the server - please try again");
+            throw e;
+        }
+    }
+    return parsed_res;
 }

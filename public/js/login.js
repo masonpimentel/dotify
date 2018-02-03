@@ -41,6 +41,8 @@ function checkUser(result, username, password) {
         ajaxRequest("GET", "/songs", "songs", null);
     }
     else {
-        window.alert("Incorrect username or password");
+        warningMessage("Last database restore may have been unsuccessful - attempting to fix now");
+        ajaxRequest("POST", "/restore", "restore");
+        //window.alert("Incorrect username or password");
     }
 }

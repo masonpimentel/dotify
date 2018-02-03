@@ -45,6 +45,27 @@ function errorMessage(message) {
     });
 }
 
+//creates a notification popup for warning messages
+function warningMessage(message) {
+    var notification = message;
+    $.notify({
+        message: notification,
+        icon: 'glyphicon glyphicon-info-sign'
+    },{
+        icon_type: 'class',
+        placement: {
+            from: "bottom",
+            align: "right"
+        },
+        type: "warning",
+        animate: {
+            enter: 'animated fadeInUp',
+            exit: 'animated fadeOutDown'
+        },
+        template: template
+    });
+}
+
 //creates a notification popup for success messages
 function successMessage(message) {
     var notification = message;

@@ -626,6 +626,17 @@ function popDatabase() {
     DB::select('insert into song values (1075, "Goodbye to a World", 12, 5.28)');
     DB::select('insert into albumcontains values ("Worlds", "Porter Robinson", 1075)');
 
+    // 2019 huehuehue
+    DB::select('insert into albumcategory values ("We Are the Light", "Markus Schulz", 2018, "Trance")');
+    DB::select('insert into song values (1076, "Calling For Love", 1, 3.41)');
+    DB::select('insert into albumcontains values ("We Are the Light", "Markus Schulz", 1076)');
+    DB::select('insert into song values (1077, "Safe From Harm", 1, 3.55)');
+    DB::select('insert into albumcontains values ("We Are the Light", "Markus Schulz", 1077)');
+
+    DB::select('insert into albumcategory values ("Dancing in the Rain", "FUTURECODE", 2019, "Trance")');
+    DB::select('insert into song values (1078, "Dancing in the Rain", 1, 3.01)');
+    DB::select('insert into albumcontains values ("Dancing in the Rain", "FUTURECODE", 1078)');
+
     //Playlists
 
     //All songs

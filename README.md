@@ -20,17 +20,17 @@ Users are able to search for songs by song name or genre:
 Administrators have access to the administrator console. The following credentials can be used - username: SnXfZ947, 
 password: abcd123
 
-<img src="https://github.com/snxfz947/Dotify/blob/master/screens/images/screen5.png"><br>_Statistics for all albums
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/5.png"><br>_Statistics for all albums
 in library_
 
-<img src="https://github.com/snxfz947/Dotify/blob/master/screens/images/screen6.png"><br>_Adding songs to the library_
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/6.png"><br>_Adding songs to the library_
 
-<img src="https://github.com/snxfz947/Dotify/blob/master/screens/images/screen7.png"><br>_Adding a playlist_
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/7.png"><br>_Adding a playlist_
 
-<img src="https://github.com/snxfz947/Dotify/blob/master/screens/images/screen10.png"><br>_Updating a rating_
-<img src="https://github.com/snxfz947/Dotify/blob/master/screens/images/screen8.png"><br>
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/10.png"><br>_Updating a rating_
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/8.png"><br>
 
-<img src="https://github.com/snxfz947/Dotify/blob/master/screens/images/screen11.png"><br>_Adding a song to a 
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/11.png"><br>_Adding a song to a 
 playlist_
 
 ## Heroku deployment instructions

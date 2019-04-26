@@ -13,25 +13,43 @@ There are two classes of users - administrators and users. Standard users have a
 
 The following credentials can be used - username: Porchwork, password: 123333
 
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/1.png"><br>_Logging in as a 
+standard user_
+
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/2.png"><br>_User interface for standard
+users_
+
 Users are able to search for songs by song name or genre:
+
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/3.png"><br>_Searching by song name_
+
+They are also able to add their own playlists:
+
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/7.png"><br>_Adding a playlist_
+
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/11.png"><br>_Adding a song to a playlist_
+
+They can also update the rating assigned to the songs in their playlists:
+
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/8.png"><br>
+
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/10.png"><br>_Updating a rating_
 
 ### Administrators
 
 Administrators have access to the administrator console. The following credentials can be used - username: SnXfZ947, 
 password: abcd123
 
+<img src="https://github.com/snxfz947/dotify/blob/master/screens/4.png"><br>_Administrator's console shown_
+
+They have access to statistics for the entire library, such as for albums and playlists:
+
 <img src="https://github.com/snxfz947/dotify/blob/master/screens/5.png"><br>_Statistics for all albums
 in library_
 
+Administrators can also add songs to the library:
+
 <img src="https://github.com/snxfz947/dotify/blob/master/screens/6.png"><br>_Adding songs to the library_
-
-<img src="https://github.com/snxfz947/dotify/blob/master/screens/7.png"><br>_Adding a playlist_
-
-<img src="https://github.com/snxfz947/dotify/blob/master/screens/10.png"><br>_Updating a rating_
-<img src="https://github.com/snxfz947/dotify/blob/master/screens/8.png"><br>
-
-<img src="https://github.com/snxfz947/dotify/blob/master/screens/11.png"><br>_Adding a song to a 
-playlist_
 
 ## Heroku deployment instructions
 

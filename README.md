@@ -2,8 +2,6 @@
 
 This is an application I built in my undergrad with 3 other team members: Jonathan Hansen, Scott Pidzarko and Alex Lin. The purpose of this project was to demonstrate a fully functional web application utilizing a MySQL database. We decided to use the [Laravel](https://laravel.com/) PHP framework to build the application.
 
-The app is hosted on Heroku: https://dotify-mpimentel.herokuapp.com/ with the [ClearDB](http://w2.cleardb.net/) add-on used for its cloud database service.
-
 Dotify is meant to provide a subset of the services provided by [Spotify](https://www.spotify.com). It is a small music 
 management system in which users are able to create playlists from a library of albums and songs. 
 
